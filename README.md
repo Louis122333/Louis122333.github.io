@@ -5,7 +5,7 @@ https://louis122333.github.io/Louis_Headlam_flickr_app/
 
 SUT20 May 2021 Examination Web Development
 
-Instructions: With the help of Flickr's API, develop a client app with html, css and vanilla JS where you can search and view pictures nicely.
+Instructions: With the help of Flickr's API, develop a client app with HTML, CSS and vanilla JS where you can search and view pictures nicely.
 
 Criteria - A web app built on Flickr's API where you:
 
