@@ -1,7 +1,10 @@
 let currentPage = 1;
 let loadingImg = false;
+let refresh = false;
+let main = document.querySelector('main');
 
 async function retrieveImages() {
+    
 
     const apiKey = 'f50f8b32b8c49b8684e50eab8ab21e6c';
     let method = 'flickr.photos.search';
@@ -35,8 +38,6 @@ function imgURL(img, size) {
 function updateUserInterface(data) {
     loadingImg = false;
    
-    let main = document.querySelector('main');
-
     data.photos.photo.forEach(img => {
         if(img.farm !== 0) {
 
@@ -97,7 +98,7 @@ document.addEventListener('scroll', function(e) {
 });
 
 document.querySelector('button').addEventListener('click', async () => {
-
+    
     //get images if input is valid
     let images = await retrieveImages();
     let errorInputMsg = "Invalid Input:\nThe search bar is either empty or only contains whitespace, please type something and press Search.";
@@ -105,8 +106,16 @@ document.querySelector('button').addEventListener('click', async () => {
     if(!text.replace(/\s/g, '').length) {
         console.log(errorInputMsg);
     }
-    else {
+    else if(refresh === false) {
         updateUserInterface(images);
+        refresh = true;
+    }
+    else if(refresh === true) {
+        while(main.firstChild) {
+            main.removeChild(main.lastChild)
+        }
+        updateUserInterface(images);
+        refresh = false;
     }
 });
 

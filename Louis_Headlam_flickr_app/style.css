@@ -52,12 +52,12 @@ figure p {
     color: #272b27; 
 }
 
-
 main {
     max-width: 1000px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
+    padding: 1rem;
     margin-top: 1rem;
    
 }
