@@ -5,7 +5,6 @@ let main = document.querySelector('main');
 
 async function retrieveImages() {
     
-
     const apiKey = 'f50f8b32b8c49b8684e50eab8ab21e6c';
     let method = 'flickr.photos.search';
     let text = document.querySelector('input#text').value;
@@ -89,6 +88,7 @@ document.addEventListener('scroll', function(e) {
     window.requestAnimationFrame(function() {
       onScroll(lastKnownScrollPosition);
       console.log("scroll position: " + lastKnownScrollPosition);
+      currentPage++;
       nextPage();
       ticking = false;
     });
