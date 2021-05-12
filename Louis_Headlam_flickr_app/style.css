@@ -19,7 +19,6 @@ header {
     align-items: center;
     color:white;
     text-shadow: 0 0 4px #FF0000, 0 0 12px #0000FF;
-
 }
 
 header h1 {
@@ -187,3 +186,20 @@ main img:hover{
 #myBtn:active {
     box-shadow: none;
 }
+
+input[type="checkbox"] {
+    cursor:pointer;
+    width: 1rem;
+    height: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
+.wrapper span {
+    font-size: 20px;
+    color:white;
+    text-shadow: 0 0 4px #FF0000, 0 0 12px #0000FF;
+    background-color: rgb(0, 0, 0, .3);
+    cursor: help;
+}
+

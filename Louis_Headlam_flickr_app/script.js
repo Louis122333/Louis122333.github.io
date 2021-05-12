@@ -10,14 +10,22 @@ async function retrieveImages() {
     let text = document.querySelector('input#text').value;
     const baseURL = 'https://api.flickr.com/services/rest';
 
-    //För att se till att man faktiskt får tillbaka ren JSON från API:et behöver man lägga till en query param
-    // nojsoncallback=1
-    let url = `${baseURL}?api_key=${apiKey}&method=${method}&text=${text}&page=${currentPage}&format=json&nojsoncallback=1`;
+    //Builds a query string depending on checkbox status. If it's checked: we add the "interestingess" parameter, default is "relevant"
+    let url = `${baseURL}?api_key=${apiKey}&method=${method}&text=${text}&page=${currentPage}`;
+    let relevant = `&format=json&nojsoncallback=1`;
+    let interestingness = `&sort=interestingness-desc&format=json&nojsoncallback=1`;
 
     try {
-        let response = await fetch(url);
-        let data = await response.json();
-        return await data;
+        if(document.getElementById('sortInterest').checked) {
+            let response = await fetch(url + interestingness); 
+            let data = await response.json();
+            return await data;
+        }
+        else {
+            let response = await fetch(url + relevant); 
+            let data = await response.json();
+            return await data;
+        }
     }
     catch(e) {
         console.error(e);
@@ -25,11 +33,13 @@ async function retrieveImages() {
 }
 
 function imgURL(img, size) {
-    let imgSize = 'z';
+    
+    let imgSize = 'z'; //medium
     if(size == 'thumb') {imgSize = 'q'}
     if(size == 'large') {imgSize = 'b'}
 
-    let url = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_${imgSize}.jpg`
+    //Flickr img URL
+    let url = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_${imgSize}.jpg`;
 
     return url;
 }
@@ -79,7 +89,7 @@ let lastKnownScrollPosition = 0;
 let ticking = false;
 
 function onScroll(scrollPos) {
- 
+
 }
 document.addEventListener('scroll', function(e) {
   lastKnownScrollPosition = window.scrollY;
@@ -107,12 +117,15 @@ document.querySelector('button').addEventListener('click', async () => {
         console.log(errorInputMsg);
     }
     else if(refresh === false) {
+        while(main.firstChild) {
+            main.removeChild(main.lastChild);
+        }
         updateUserInterface(images);
         refresh = true;
     }
     else if(refresh === true) {
         while(main.firstChild) {
-            main.removeChild(main.lastChild)
+            main.removeChild(main.lastChild);
         }
         updateUserInterface(images);
         refresh = false;
