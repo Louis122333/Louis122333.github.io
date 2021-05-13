@@ -25,11 +25,21 @@ header h1 {
     font-size: 6rem; 
     margin-block-end: 0rem;
 }
-
-header p { 
+header a {
+    text-decoration: none;
+}
+header a:link { 
     margin-block-start: 0.5rem;
     font-size: 2rem;
 }
+header a:visited {
+    color:white;
+}
+header a:active {
+    color: blue;
+    opacity: 0.3;
+}
+
 
 figure p {
     background: black;
