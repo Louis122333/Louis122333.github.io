@@ -3,6 +3,14 @@ let loadingImg = false;
 let refresh = false;
 let main = document.querySelector('main');
 
+function defaultCursor() {
+    document.body.style.cursor = 'default';
+} 
+
+function loadCursor() {
+    document.body.style.cursor = 'wait';
+}
+
 async function retrieveImages() {
     
     const apiKey = 'f50f8b32b8c49b8684e50eab8ab21e6c';
@@ -46,10 +54,9 @@ function imgURL(img, size) {
 
 function updateUserInterface(data) {
     loadingImg = false;
-   
+    
     data.photos.photo.forEach(img => {
         if(img.farm !== 0) {
-
             let el = document.createElement('img');
             el.setAttribute('src', imgURL(img, 'thumb'));
             el.setAttribute('alt', img.title);
@@ -60,7 +67,7 @@ function updateUserInterface(data) {
 
             main.appendChild(el);
         }
-    });
+    });  
 }
 
 //Open the lightbox
@@ -92,24 +99,31 @@ function onScroll(scrollPos) {
 
 }
 document.addEventListener('scroll', function(e) {
+
   lastKnownScrollPosition = window.scrollY;
+
   if (!ticking && window.scrollY + window.innerHeight >= 
         document.documentElement.scrollHeight - 50) {
-    window.requestAnimationFrame(function() {
+
+      window.requestAnimationFrame(function() {
       onScroll(lastKnownScrollPosition);
       console.log("scroll position: " + lastKnownScrollPosition);
+      loadCursor();
       currentPage++;
       nextPage();
       ticking = false;
     });
+
     ticking = true;
   }
+  defaultCursor();
   
 });
 
 document.querySelector('button').addEventListener('click', async () => {
     
     //get images if input is valid
+    loadCursor();
     let images = await retrieveImages();
     let errorInputMsg = "Invalid Input:\nThe search bar is either empty or only contains whitespace, please type something and press Search.";
     let text = document.querySelector('input#text').value;
@@ -130,6 +144,7 @@ document.querySelector('button').addEventListener('click', async () => {
         updateUserInterface(images);
         refresh = false;
     }
+    defaultCursor();
 });
 
 //Scroll button:
